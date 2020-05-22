@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<meta name="theme-color" content="#007bff">
+	<meta name="Description" content="Gerencia de emprestimos para coisas/item aos seus amigos.">
+	<title>Meus Emprestimo</title>
+	<link rel='stylesheet' type='text/css' media='screen' href='bootstrap-4.3.1\dist\css\bootstrap.min.css'>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="icon" type="type/svg" href="imagens/logo2.svg" sizes="16x16">
+	<link rel="icon" type="type/png" href="imagens/emprestimos32.png" sizes="32x32">
+	<link rel="icon" type="type/png" href="imagens/emprestimos96.png" sizes="96x96">
+	<link rel="apple-touch-icon" type="type/png" href="imagens/emprestimos180.png" sizes="180x180">
+</head>
+
+<body>
+	<header>
+		<h1 id="title">Meus Empréstimos</h1>
+	</header>
+	<nav>
+		<div class="row options align-content-center">
+			<button class="btn btn-primary col mb-2" id="btnAddAmg" data-toggle="modal"
+				data-target="#ModalAddAmg">Adicionar amigo</button>
+			<button class="btn btn-primary col mb-2" id="btnAddEmp" data-toggle="modal"
+				data-target="#ModalAddEmp">Adicionar emprestimo</button>
+		</div>
+	</nav>
+	<hr>
+	<section>
+			<div class="row" id="emprestimos">
+				
+			</div>
+	</section>
+	<aside id="listaAmigos">
+		<h1 id="titleListaAmg">Listx de Amigos</h1>
+		<div id="amigos">
+
+		</div>
+	</aside>
+	<footer>
+		<p id="cp">Copyright © 2020 | <a target="_top" href="mailto:daniel.mendozateixeira@gmail.com?subject=Sugestão"> Daniel Mendoza</a></p>
+	</footer>
+	<!--Modal Amg -->
+	<div class="modal fade" id="ModalAddAmg" tabindex="-1" role="dialog" aria-labelledby="ModalAddAmgTitle"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModalAddAmgTitle">Adicionar Amigo</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="FAddAmg">
+						<div class="form-group">
+							<label for="NameAmg">Nome:</label>
+							<input type="text" name="NameAmg" id="NameAmg" class="form-control" required="">
+						</div>
+						<div class="form-group">
+							<label for="EmailAmg">Email:</label>
+							<input type="e-mail" name="EmailAmg" id="EmailAmg" class="form-control">
+						</div>
+						<div class="form-group  mb-2">
+							<label for="TelefAmg">Telefone:</label>
+							<input type="text" name="TelefAmg" id="TelefAmg" class="form-control">
+						</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-primary" id="SalvarAmg">Salvar</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--Modal Emp -->
+	<div class="modal fade" id="ModalAddEmp" tabindex="-1" role="dialog" aria-labelledby="ModalAddEmpTitle"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModalAddEmpTitle">Adicionar Emprestimo</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="FAddEmp">
+						<div class="form-group">
+							<label for="ItemEmp">O que você emprestou?</label>
+							<input type="text" name="ItemEmp" id="ItemEmp" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="DataEmp">Data em que você emprestou:</label>
+							<input type="date" name="DataEmp" id="DataEmp" class="form-control">
+						</div>
+						<div class="form-group mb-2">
+							<label for="Amigo">Amigo:</label>
+							<select name="selectAmigo" id="selectAmigo" class="form-control">
+								
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="DataDev">Data de devolução:</label>
+							<input type="date" name="DataDev" id="DataDev" class="form-control">
+						</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-primary">Salvar</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+</html>
