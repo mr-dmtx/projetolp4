@@ -1,0 +1,154 @@
+
+.options{
+	margin: 1%;
+}
+
+
+
+#title{
+	font-family: Sulphur Point;
+	font-size: 3em;
+	text-align: center;
+	min-width: 200px;
+	margin-top: 1%;
+	color: #007bff;
+}
+
+#btnAddAmg, #btnAddEmp{
+	margin:1%;
+	min-width: 300px;
+	height: 50px;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.nomeAmigoLista{
+	color: black;
+	border-color: #8e8c8c;
+	border-radius: 2px;
+	background-color: #eaeaea; /*#dadada*/
+	margin:5%;
+	word-wrap: break-word;
+}
+
+#link_amg:hover, .nomeAmigoLista:hover{
+	color: black;
+	background-color: #dadada;
+	border-radius: 4px;
+	text-align: center;
+	font-weight: bold;
+
+}
+
+#titleListaAmg{
+	text-align: center;
+	font-size: 1.3em;
+}
+
+.card{
+	float: left;
+	margin-left: 1%;
+	margin-top: 1%;
+	min-width: 200px;
+}
+
+
+
+#cp{
+	margin-top: 2%;
+}
+
+#cp a{
+	 color: black;
+}
+
+#cp a:hover{
+	text-decoration: underline;
+	color: black;
+}
+
+a{
+	color: #fff;
+	text-decoration:none;	
+}
+a:hover{
+	color: #fff;
+	
+}
+a:link{
+	color: #fff;
+	text-decoration:none;
+}
+body{
+	list-style-type: square;
+	width: 100%;
+	align-items: center;
+}
+
+label{
+	font-weight: 500;
+}
+
+header{
+	width: 100%;
+}
+aside{
+	width: 25%;
+	height: 100%;
+	float: left;
+	background-color: #f1f1f1;
+	min-height: 100px;
+
+}
+section{
+	float: right;
+	width: 75%;
+	background-color: #f1f1f1;
+	min-height: 100px;
+}
+
+aside, section{
+	border: solid;
+	border-color: #c7c7c7;
+	border-width: 1px;
+	border-radius: 0.2em;	
+}
+footer{
+	width: 100%;
+	float: left;
+	text-align: center;
+	background-color: #f1f1f1;
+	height: 100%;
+	font-weight: 200;
+	margin-top: 2%;
+}
+
+@media screen and (max-width: 786px){
+	
+	#emprestimos{
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+	}
+
+}
+
+@media screen and (max-width: 600px){ /*tela ate 600px de largura*/
+	section{
+		width: 100%;
+		padding-bottom: 1%;
+	}
+
+
+	aside{
+		margin-top: 1%;
+		display: block;
+		width: 100%;
+		word-wrap: break-word;
+	}
+	header{
+		width: 100%;		
+	}
+	
+}
+

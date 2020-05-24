@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#007bff">
+	<meta name="Description" content="Gerenciador de emprestimos para coisas/item aos seus amigos.">
+	<title>Meus Emprestimo</title>
+	<!--importar bootstrap, js, jquery, font awesome-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/mainIndex.css">
+	<link rel="icon" type="type/png" href="imagens/emprestimos16.png" sizes="16x16">
+	<link rel="icon" type="type/png" href="imagens/emprestimos32.png" sizes="32x32">
+	<link rel="icon" type="type/png" href="imagens/emprestimos96.png" sizes="96x96">
+	<link rel="apple-touch-icon" type="type/png" href="imagens/emprestimos180.png" sizes="180x180">
+</head>
+<body>
+    <div class="container container-fluid">
+            <div class="row cabecalho">
+                    <h1 class="col-md-12 text-center">
+                        <a href="index.html">
+                        <img src="imagens/emprestimos180.png" alt="logo" title="Meus Emprestimos" width="140" height="140">
+                    </a>
+                        <div class="row justify-content-center">
+                            <a class="fa fa-cog icone" aria-hidden="true" title="Configurações da conta" href="conta.php"></a>
+                            <a class="fa fa-book icone" aria-hidden="true" title="Documentação" href="documentacao.html"></a>
+                            <a class="fa fa-sign-out icone" aria-hidden="true" title="Sair" href="entrar.php"></a>
+                        </div>
+                    </h1>
+                    <hr>
+                </div><nav>
+              <div class="nav nav-tabs  mb-5" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-mapa-site-tab" data-toggle="tab" href="#nav-mapa-site" role="tab" aria-controls="nav-mapa-site" aria-selected="true">Mapa do site</a>
+                <a class="nav-item nav-link" id="nav-wireframes-tab" data-toggle="tab" href="#nav-wireframes" role="tab" aria-controls="nav-wireframes" aria-selected="false">Wireframes</a>
+                <a class="nav-item nav-link" id="nav-uml-tab" data-toggle="tab" href="#nav-uml" role="tab" aria-controls="nav-uml" aria-selected="false">UML</a>
+                <a class="nav-item nav-link" id="nav-db-tab" data-toggle="tab" href="#nav-db" role="tab" aria-controls="nav-db" aria-selected="false">Banco de dados</a>
+                <a class="nav-item nav-link" id="nav-git-tab" data-toggle="tab" href="#nav-git" role="tab" aria-controls="nav-git" aria-selected="false"><i class="fa fa-github" aria-hidden="true"></i></a>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-mapa-site" role="tabpanel" aria-labelledby="nav-mapa-site-tab">
+                    <h1 class="text-center font-weight-bold">Mapa do site</h1>
+                    <img src="documentacao/mapa_site.png" class="img-fluid" alt="mapa_site.png" title="Mapa do site">
+                    <hr>
+                    <p>
+                        <b>Página inicial: </b>A página inicial é apresentada com um menu centrado na parte superior com as opçoes de Adicionar amigo ou Adicionar emprestimo, no lado esquerdo há a lista de amigos com os emprestimos ao lado e o resto da página exibe a lista de amigos adicionados e  emprésitmos feitos.
+                        <br>
+                        <b>Entrar:</b> A página ENTRAR contem os campos email, senha e uma opcao caso o usuario tenha esquecido a senha.  
+                        <br>
+                        <b>Criar conta:</b> A página CRIAR CONTA contem um formulario com os campos nome, email e senha, sendo o campo email verificado para que não tenha outro igual.
+                        <br>
+                        <b>Adicionar empréstimo:</b> Formulario com os campos nome, email e telefone
+                        <br>
+                        <b>Adicionar empréstimo:</b> Formulário com os campos item, data em que foi emprestado, data de devolucao, e para qual amigo.
+                        <br>
+                        <b>Editar empréstimo:</b> altera ou atualizar emprestimo
+                        <br>
+                        <b>Editar amigo:</b> altera ou atualizar dados do amigo
+                    </p>
+                </div>
+                 <div class="tab-pane fade text-center" id="nav-wireframes" role="tabpanel" aria-labelledby="nav-wireframes-tab">
+                    <h1 class="font-weight-bold text-center">Modal de adicionar amigo:</h1>
+                     <img src="documentacao/wireframes/adicionar_amigo.png" class="img-fluid border border-secondary" alt="adicionar_amigo.png">
+                     <h1 class="font-weight-bold text-center">Modal de adicionar emprestimo:</h1>
+                     <img src="documentacao/wireframes/adicionar_emprestimo.png" class="img-fluid border border-secondary" alt="">
+                     <h1 class="font-weight-bold text-center">Página de editar conta:</h1>
+                     <img src="documentacao/wireframes/conta.png" class="img-fluid border border-secondary" alt="">
+                     <h1 class="font-weight-bold text-center">Página de criar conta:</h1>
+                     <img src="documentacao/wireframes/criar_conta.png" class="img-fluid border border-secondary" alt="">
+                     <h1 class="font-weight-bold text-center">Página de editar amigo:</h1>
+                     <img src="documentacao/wireframes/editar_amigo.png" class="img-fluid border border-secondary" alt="">
+                     <h1 class="font-weight-bold text-center">Página de editar empréstimo:</h1>
+                     <img src="documentacao/wireframes/editar_emprestimo.png" class="img-fluid border border-secondary" alt="">
+                     <h1 class="font-weight-bold text-center">Página de login:</h1>
+                     <img src="documentacao/wireframes/entrar.png" class="img-fluid border border-secondary" alt="">
+                     <h1 class="font-weight-bold text-center">Página inícial:</h1>
+                     <img src="documentacao/wireframes/pgina_inicial.png" class="img-fluid border border-secondary" alt="">
+                 </div>
+                 <div class="tab-pane fade text-center" id="nav-uml" role="tabpanel" aria-labelledby="nav-uml-tab">
+                     <h1 class="font-weight-bold">Caso de uso</h1>
+                     <img src="documentacao/CasoDeUso.png" class="img-fluid" alt="CasoDeUso.png">
+                     <h1 class="font-weight-bold">Diagrama de classe</h1>
+                     <img src="documentacao/DiagramaDeClasse.png" class="img-fluid" alt="DiagramaDeClasse.png">
+                 </div>
+                <div class="tab-pane fade text-center" id="nav-db" role="tabpanel" aria-labelledby="nav-db-tab">
+                    <h1 class="font-weight-bold">Modelo entidade-relacionamento</h1>
+                    <img src="documentacao/BD_Conceitual.png" class="img-fluid" alt="">
+                    <h3 class="font-weight-bold mb-3">Base de dados SQLite: <a href="https://github.com/mr-dmtx/projetolp4/blob/master/emprestimos.sql">https://github.com/mr-dmtx/projetolp4/blob/master/emprestimos.sql</a></h3>
+                </div>
+                <div class="tab-pane fade text-center" id="nav-git" role="tabpanel" aria-labelledby="nav-git-tab">
+                    <h1 class="font-weight-bold">Projeto no Github: <a href="https://github.com/mr-dmtx/projetolp4">https://github.com/mr-dmtx/projetolp4</a></h1>
+                </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</html>

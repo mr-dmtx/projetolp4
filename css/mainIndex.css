@@ -1,0 +1,84 @@
+a:link, a:hover{
+    color: rgb(228, 228, 228); 
+    text-decoration: none;
+}
+
+a
+
+.cabecalho>h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1>a{
+    color: #000;
+}
+h1>a:hover{
+    color: #000;
+}
+.card-t1>a{
+    color: white;
+}
+
+.card-t1{
+    margin: 1%;
+    min-width: 200px;
+}
+
+.btn-top{
+    margin: 1%;
+    font-weight: bold;
+}
+
+.cabecalho{
+    align-items: center;
+    justify-content: center;
+}
+
+.section{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 1%;
+    background-color: rgb(230, 230, 230);
+}
+
+.listaAmg{
+    border-right: 1px solid rgb(163, 163, 163);
+    color: #000;
+    float: right;
+}
+
+.listaEmps{
+    float: left;
+}
+
+.linkAmg>a{
+    color: #000;
+}
+
+.linkAmg:hover{
+    background-color: rgb(223, 221, 221);
+    font-weight: bold;
+    text-align: center;
+    
+}
+
+.icone{
+    margin-left: 2%;
+    margin-right: 2%;
+    color: rgb(209, 209, 209);
+}
+
+.icone:hover{
+    color: #000;
+}
+
+.nav-tabs>a{
+    color: #007bff;
+}
+
+@media screen and (max-width: 767px){
+    .listaEmps{
+        margin-left: 10%;
+    }
+}
