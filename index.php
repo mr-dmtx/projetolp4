@@ -1,3 +1,10 @@
+<?php 
+	session_start();
+	if(!isset($_SESSION['logged'])){
+		header("location: entrar.php");
+	}
+ ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -25,7 +32,7 @@
 					<div class="row justify-content-center">
 						<a class="fa fa-cog icone" aria-hidden="true" title="Configurações da conta" href="conta.php"></a>
 						<a class="fa fa-book icone" aria-hidden="true" title="Documentação" href="documentacao.html"></a>
-						<a class="fa fa-sign-out icone" aria-hidden="true" title="Sair" href="entrar.php"></a>
+						<a class="fa fa-sign-out icone" aria-hidden="true" title="Sair" href="logout.php"></a>
 					</div>
 				</h1>
 				<hr>

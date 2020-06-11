@@ -1,3 +1,9 @@
+<?php 
+    session_start();
+    if(!isset($_SESSION['logged'])){
+        header("location: entrar.php");
+    }
+ ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

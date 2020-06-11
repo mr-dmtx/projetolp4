@@ -1,3 +1,29 @@
+<?php 
+
+//    namespace Classes;
+    
+    session_start();
+    if(isset($_SESSION['logged'])){
+        header("location: index.php");
+    }
+
+        require 'Classes/Usuario.php';
+
+        $lgin = $_POST['entrar'] ?? null;
+
+        $aviso = null;
+
+        if(!is_null($lgin)){
+            $user = new Usuario($_POST['email'], md5($_POST['senha']));
+
+            if(!$user->login()){
+                $aviso = "Email ou senha incorretos";
+            }
+
+        }
+    
+ ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,7 +35,6 @@
 	<title>Meus Emprestimo</title>
 	<!--importar bootstrap, js, jquery, font awesome-->
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/mainIndex.css">
 	<link rel="icon" type="type/png" href="imagens/emprestimos16.png" sizes="16x16">
 	<link rel="icon" type="type/png" href="imagens/emprestimos32.png" sizes="32x32">
@@ -27,7 +52,7 @@
                     <hr>
                 </div>
         <div class="row">
-                <form action="index.html" method="post" class="col-lg-4 m-auto">
+                <form method="post" class="col-lg-4 m-auto">
                     <div class="row justify-content-center">
                         <h1 class="h3 mb-3 font-weight-light">Entrar</h1>
                     </div>
@@ -35,8 +60,11 @@
                     <input type="email" id="email" name="email" class="form-control mb-2" placeholder="Endereço de email" maxlength="45" required autofocus>
                     <label for="senha" class="sr-only">Senha</label>
                     <input type="password" id="senha" name="senha" class="form-control mb-2" placeholder="Senha" required>
-                    <button class="btn btn-lg btn-primary btn-block mt-2 font-weight-bold" type="submit" value="submit">Entrar</button>
-                    <a href="registrar.html" class="btn btn-lg btn-primary btn-block font-weight-bold">Criar conta</a>
+                    <?php if(!is_null($aviso)): ?>
+                            <p class="mb-3 text-danger font-weight-bold text-center"><?=$aviso?></p>
+                        <?php endif; ?>
+                    <button class="btn btn-lg btn-primary btn-block mt-2 font-weight-bold" type="submit" name="entrar" value="submit">Entrar</button>
+                    <a href="registrar.php" class="btn btn-lg btn-primary btn-block font-weight-bold">Criar conta</a>
                 </form>
         </div>
     </div>

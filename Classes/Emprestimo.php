@@ -1,6 +1,6 @@
 <?php 
 	
-	class ClassName extends AnotherClass
+	class Emprestimo
 	{
 		private $nome;
 		private $dataEmprestimo;

@@ -1,3 +1,40 @@
+<?php 
+    session_start();
+    if(isset($_SESSION['logged'])){
+        header("location: index.php");
+    }
+    require 'Classes/Usuario.php';
+
+
+    $aviso = null;
+
+    $sgp = $_POST['registrar'] ?? null;
+    if(!is_null($sgp)){
+        $email = $_POST['email'] ?? null;
+        $senha = md5($_POST['senha']) ?? null;
+        $senha2 = md5($_POST['resenha']) ?? null;
+        if(!is_null($senha) and !is_null($senha2) and !is_null($email)){
+            if($senha === $senha2){
+                $user = new Usuario($email, $senha);
+                if($user->cadastrarConta()){
+                    $user->login();
+                }
+                else{
+                    $aviso .= "*Esse email já esta em uso<br>";
+                }
+            }
+            else{
+                $aviso .= "*As senhas precisam ser iguais<br>";
+            }
+        }
+        else{
+            $aviso .= "*Preencha os campos corretamente<br>";
+        }
+    }
+
+
+
+ ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -27,7 +64,7 @@
                         <hr>
                     </div>
             <div class="row">
-                    <form action="index.html" method="post" class="col-lg-4 m-auto">
+                    <form method="post" class="col-lg-4 m-auto">
                         <div class="row justify-content-center">
                             <h1 class="h3 mb-3 font-weight-light">Criar conta</h1>
                         </div>
@@ -37,7 +74,10 @@
                         <input type="password" id="senha" name="senha" class="form-control mb-2" placeholder="Senha" required>
                         <label for="resenha" class="sr-only">Confirmar Senha</label>
                         <input type="password" id="resenha" name="resenha" class="form-control mb-2" placeholder="Confirmar Senha" required>
-                        <button class="btn btn-lg btn-primary btn-block mt-2 font-weight-bold" type="submit" value="submit">Criar conta</button>
+                        <?php if(!is_null($aviso)): ?>
+                            <p class="mb-3 text-danger font-weight-bold text-center"><?=$aviso?></p>
+                        <?php endif; ?>
+                        <button class="btn btn-lg btn-primary btn-block mt-2 font-weight-bold" type="submit" name="registrar" value="submit">Criar conta</button>
                         <a href="entrar.php" class="btn btn-lg btn-primary btn-block font-weight-bold">Voltar</a>
                     </form>
             </div>
