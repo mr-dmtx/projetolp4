@@ -37,17 +37,17 @@
                 }
                 
             }
-        }
-        else{
-            try {
-                $emp = new Emprestimo();
+            else{
+                try {
 
-                $emp->deletarEmprestimo($_GET['id']);
-
-            } catch (Throwable $e) {
-                $erro[] = "Erro ao deletar emprestimo. Erro: " . $e->getMessage();
+                    $emp->deletarEmprestimo($_GET['id']);
+                    header("location: index.php");
+                } catch (Throwable $e) {
+                    $erro[] = "Erro ao deletar emprestimo. Erro: " . $e->getMessage();
+                }
             }
         }
+        
          
     }
     
@@ -138,6 +138,9 @@
                     <hr>
                 </div>
         <div class="row section">
+            <?php foreach ($erro as $e): ?>
+                <p class="font-weight-bold text-danger"><?=$e?></p>
+            <?php endforeach ?>
             <form action="#" method="POST" class="col-md-12">
                     <label for="itemEmp" class="h3">Item:</label>
                     <input type="text" name="itemEmp" id="itemEmp" class="form-control" value="<?=$v['nm_item']?>">
@@ -161,8 +164,8 @@
 					<label for="dataDev" class="h3">Data de devolução:</label>
                     <input type="date" name="dataDev" id="dataDev" class="form-control" value="<?=$v['dt_devolucao']?>">
                     <input type="submit" name="act" value="Editar" class="col btn btn-warning btn-md mt-3 mb-3 font-weight-bold">
-                    <input type="button" name="act" value="O item foi devolvido" class="col btn btn-success btn-md mb-3 font-weight-bold">
-                    <input type="button" name="act" value="Deletar item" class="col btn btn-danger btn-md mb-3 font-weight-bold">
+                    <input type="submit" name="act" value="O item foi devolvido" class="col btn btn-success btn-md mb-3 font-weight-bold">
+                    <input type="submit" name="act" value="Deletar item" class="col btn btn-danger btn-md mb-3 font-weight-bold">
             </form>
         </div>
     </div>

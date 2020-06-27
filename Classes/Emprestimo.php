@@ -51,14 +51,15 @@
 
             $cmd->execute();
 		}
-		public function deletarEmprestimo(string $id)
+		public static function deletarEmprestimo(string $id)
 		{	
 			require 'conexaobd.php';
+
 			$delete = "DELETE FROM Emprestimo WHERE cd_emprestimo = :id_emp";
 
 			$cmd = $conexao->prepare($delete);
 
-            $cmd->bindParam(":item", $id);
+            $cmd->bindParam(":id_emp", $id);
 
             $cmd->execute();
 		}

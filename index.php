@@ -166,6 +166,9 @@
 						<div class="row row-cols-3">
 	
 							<?php 
+							if(!$listaEmps){
+								echo "<p class='font-weight-bold'>Você ainda não fez nenhum emprestimo.</p>";
+							}
 								foreach ($listaEmps as $emp){
 									$situacao = defineDate($emp['dt_emprestimo'], $emp['dt_devolucao']);
 									$tipe = "";
