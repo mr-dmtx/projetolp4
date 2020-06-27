@@ -5,9 +5,8 @@
     }
     require 'Classes/Usuario.php';
 
-
     $aviso = null;
-
+    $confirmacao = null;
     $sgp = $_POST['registrar'] ?? null;
     if(!is_null($sgp)){
         $email = $_POST['email'] ?? null;
@@ -15,9 +14,16 @@
         $senha2 = md5($_POST['resenha']) ?? null;
         if(!is_null($senha) and !is_null($senha2) and !is_null($email)){
             if($senha === $senha2){
-                $user = new Usuario($email, $senha);
-                if($user->cadastrarConta()){
-                    $user->login();
+                $user = new Usuario();
+                if($user->cadastrarConta($email, $senha)){
+
+                    $_SESSION['logged'] = true;
+                    $_SESSION['email'] = $user->email;
+                    $_SESSION['senha'] = $user->senha;
+
+                    if($user->login($_SESSION['email'], $_SESSION['senha'])){
+                        header("location: index.php");    
+                    }
                 }
                 else{
                     $aviso .= "*Esse email já esta em uso<br>";
@@ -44,7 +50,7 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	<meta name="theme-color" content="#007bff">
 	<meta name="Description" content="Gerencia de emprestimos para coisas/item aos seus amigos.">
-	<title>Meus Emprestimo</title>
+	<title>Meus Emprestimo - Cadastrar-se</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel='stylesheet' type='text/css' media='screen' href='css/mainIndex.css'>
 	<link rel="icon" type="type/png" href="imagens/emprestimos16.png" sizes="16x16">
@@ -77,6 +83,11 @@
                         <?php if(!is_null($aviso)): ?>
                             <p class="mb-3 text-danger font-weight-bold text-center"><?=$aviso?></p>
                         <?php endif; ?>
+                        <?php if(!is_null($confirmacao)): ?>
+                            <p class="mb-3 text-success font-weight-bold text-center"><?=$confirmacao?></p>
+                        <?php
+                            endif;
+                        ?>
                         <button class="btn btn-lg btn-primary btn-block mt-2 font-weight-bold" type="submit" name="registrar" value="submit">Criar conta</button>
                         <a href="entrar.php" class="btn btn-lg btn-primary btn-block font-weight-bold">Voltar</a>
                     </form>

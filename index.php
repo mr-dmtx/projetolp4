@@ -1,8 +1,102 @@
 <?php 
+	
+	require 'conexaobd.php';
+	require 'Classes/Amigo.php';
+	require 'Classes/Emprestimo.php';
+	require 'functions.php';
+
 	session_start();
+
+	$aviso = [];
+
 	if(!isset($_SESSION['logged'])){
 		header("location: entrar.php");
 	}
+
+	//ADD AMIGO
+	try {
+		if(isset($_POST['addAmg'])){
+
+			$nmAmg = $_POST['nomeAmg'] ?? null;
+			$emailAmg = $_POST['emailAmg'] ?? "";
+			$telAmg = $_POST['telAmg'] ?? "";
+
+			if(!is_null($nmAmg)){
+
+				$amg = new Amigo($nmAmg, $emailAmg, $telAmg);
+
+				$amg->cadastrarAmigo();
+			}
+
+		}
+	} catch (Throwable $e) {
+		$aviso[] = "Error ao adicionar amigo. Erro: " . $e->getMessage();
+		
+	}
+	
+	try {
+
+		//EXIBIR AMIGOS
+		$select_amg = "SELECT * FROM Amigo WHERE fk_Usuario_amigo = :id_user;";
+
+		$cmd = $conexao->prepare($select_amg);
+
+		$cmd->bindParam(":id_user", $_SESSION['id_user']);
+
+		$listaAmg = $cmd->execute();
+
+		$listaAmg = $cmd->fetchAll();
+		
+	} catch (Throwable $e) {
+
+		$aviso[] = "Erro ao exibir lista de amigos. Erro: " . $e->getMessage();
+		
+	}
+	
+	//ADD EMPRESTIMOS
+	try {
+		if(isset($_POST['addEmp'])){
+
+			$item = $_POST['itemEmp'] ?? null;
+			$dataEmp = $_POST['dataEmp'];
+			$amg = $_POST['amigo'];
+			$dataDev = $_POST['dataDev'] ?? "";
+
+			if(!is_null($item) and $item != ""){
+				if(strtotime($dataEmp) > strtotime($dataDev)){
+					$dataDev = "";
+				}
+				$emp = new Emprestimo($item, $dataEmp, $dataDev, $amg);
+
+				$emp->cadastrarEmprestimo();
+			}
+
+		}
+		
+	} catch (Throwable $e) {
+
+		$aviso[] = "Erro ao salvar emprestimo. Erro: " . $e->getMessage();
+		
+	}
+
+	//EXIBIR EMPRESTIMOS
+	try {
+		$select_emps = "SELECT * FROM Emprestimo e INNER JOIN Amigo a on e.fk_Usuario_emprestimo = :id_user and e.fk_Amigo = a.cd_amigo ORDER BY dt_devolucao";
+
+		$cmd = $conexao->prepare($select_emps);
+
+		$cmd->bindParam(":id_user", $_SESSION['id_user']);
+
+		$listaEmps = $cmd->execute();
+
+		$listaEmps = $cmd->fetchAll();
+
+		
+
+	} catch (Throwable $e) {
+		$aviso[] = "Erro ao exibir emprestimos. Erro: " . $e->getMessage();
+	}
+	/**/
  ?>
 
 <!DOCTYPE html>
@@ -20,7 +114,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/mainIndex.css">
 	<link rel="icon" type="type/png" href="imagens/emprestimos16.png" sizes="16x16">
-	<link rel="icon" type="type/png" href="imagens/emprestimos32.png" sizes="32x32">
+	<link rel="icon" type="type/png" href="imagens/emprestimos_s.png" sizes="32x32">
 	<link rel="icon" type="type/png" href="imagens/emprestimos96.png" sizes="96x96">
 	<link rel="apple-touch-icon" type="type/png" href="imagens/emprestimos180.png" sizes="180x180">
 </head>
@@ -44,49 +138,90 @@
 				<div class="col-md-2 listaAmg">
 					<h1 class="h5 text-center">Lista de amigos</h1>
 					<hr>
-					<p class="linkAmg"><a href="amigo.php">Mariazinha</a></p>
-					<p class="linkAmg"><a href="amigo.php">Joazinho</a></p>
-					<p class="linkAmg"><a href="amigo.php">Pedrinho</a></p>
+					<?php 
+
+					if($listaAmg){
+
+						foreach ($listaAmg as $amg) {
+							echo "<p class='linkAmg'>
+									<a href='amigo.php?amg=".$amg['cd_amigo']."'>".$amg['nm_amigo']."</a>
+								</p>";		
+						}
+
+					}else{
+						echo "<p class='font-weight-bold text-center'>Sem amigos</p>";
+					}
+
+					 ?>
 				</div>
+
 				<div class="col-md-10 listaEmps">
+					<?php 
+						if(!is_null($aviso)){
+									foreach ($aviso as $a) {
+										echo "<p class='text-danger font-weight-bold'>".$a."</p><br>";
+									}
+								}
+					 ?>
 						<div class="row row-cols-3">
-							<div class="card bg-danger col-sm-4 card-t1" style="max-width: 18rem;" title="Atrasado - Camisa do Santos"><a href="emprestimo.html">
-								<div class="card-header"><strong>Atrasado</strong></div>
-								<div class="card-body">
-									<h5 class="card-title"><strong>Camisa do Santos</strong></h5>
-									<p class="card-text"><strong>Mariazinha</strong> | Email: mari@asd.e | Telefone: 13 996423-3030</p>
-								</div>
-							</a></div>
-							<div class="card bg-warning col-sm-4 card-t1" style="max-width: 18rem;" title="Dia da devolução - Bola de futebol"><a href="emprestimo.html">
-									<div class="card-header"><strong>Hoje é o dia da devolução</strong></div>
-									<div class="card-body">
-										<h5 class="card-title"><strong>Bola de futebol</strong></h5>
-										<p class="card-text"><strong>Joazinho</strong> | Email: joao@ss.net | Telefone: Sem telefone
-										</p>
-									</div>
-								</a></div>
-							<div class="card bg-primary col-sm-4 card-t1" style="max-width: 18rem;" title="Faltam 4 dias - Livro Harry Potter"><a href="emprestimo.html">
-									<div class="card-header"><strong>Faltam 4 dias</strong></div>
-									<div class="card-body">
-										<h5 class="card-title"><strong>Livro Harry Potter</strong></h5>
-										<p class="card-text"><strong>Zequinha</strong> | Email: zeze@asdasd.asd | Telefone: Sem
-											telefone</p>
-									</div>
-								</a></div>
-								<div class="card bg-success col-sm-4 card-t1" style="max-width: 18rem;" title="Sem data de devolução - Pen Drive"><a href="emprestimo.html">
-									<div class="card-header"><strong>Sem data de devolução</strong></div>
-									<div class="card-body">
-										<h5 class="card-title"><strong>Pen Drive</strong></h5>
-										<p class="card-text"><strong>Pedrinho</strong> | Email: ped@asdasd.asd | Telefone: 13 98573-5672</p>
-									</div>
-								</a></div>
-								<div class="card bg-success col-sm-4 card-t1" style="max-width: 18rem;" title="Sem data de devolução - Pen Drive"><a href="emprestimo.html">
-										<div class="card-header"><strong>Sem data de devolução</strong></div>
-										<div class="card-body">
-											<h5 class="card-title"><strong>Pen Drive</strong></h5>
-											<p class="card-text"><strong>Pedrinho</strong> | Email: ped@asdasd.asd | Telefone: 13 98573-5672</p>
-										</div>
-									</a></div>
+	
+							<?php 
+								foreach ($listaEmps as $emp){
+									$situacao = defineDate($emp['dt_emprestimo'], $emp['dt_devolucao']);
+									$tipe = "";
+									if($situacao == 1){
+											$tipe = "<div class='card bg-primary col-sm-4 card-t1' style='max-width: 18rem;' title='Falta alguns dias - ".$emp['nm_item']."'>
+										<a href='emprestimo.php?id=".$emp['cd_emprestimo']."'>
+											<div class='card-header'>
+												<strong>Falta alguns dias</strong></div>
+											<div class='card-body'>
+												<h5 class='card-title'><strong>".$emp['nm_item']."</strong></h5>
+												<p class='card-text'><strong>".$emp['nm_amigo']."</strong> | Email: ".$emp['cd_email_amigo']." | Telefone: ".$emp['cd_telefone']."</p>
+											</div>
+										</a>
+									</div>";
+									}
+									else if($situacao == 2){
+										$tipe = "<div class='card bg-warning col-sm-4 card-t1' style='max-width: 18rem;' title='Hoje é o dia da devolução - ".$emp['nm_item']."'>
+										<a href='emprestimo.php?id=".$emp['cd_emprestimo']."'>
+											<div class='card-header'>
+												<strong>Hoje é o dia da devolução</strong></div>
+											<div class='card-body'>
+												<h5 class='card-title'><strong>".$emp['nm_item']."</strong></h5>
+												<p class='card-text'><strong>".$emp['nm_amigo']."</strong> | Email: ".$emp['cd_email_amigo']." | Telefone: ".$emp['cd_telefone']."</p>
+											</div>
+										</a>
+									</div>";
+									}
+									else if($situacao == 3){
+										$tipe = "<div class='card bg-danger col-sm-4 card-t1' style='max-width: 18rem;' title='Item atrasado - ".$emp['nm_item']."'>
+										<a href='emprestimo.php?id=".$emp['cd_emprestimo']."'>
+											<div class='card-header'>
+												<strong>Atrasado</strong></div>
+											<div class='card-body'>
+												<h5 class='card-title'><strong>".$emp['nm_item']."</strong></h5>
+												<p class='card-text'><strong>".$emp['nm_amigo']."</strong> | Email: ".$emp['cd_email_amigo']." | Telefone: ".$emp['cd_telefone']."</p>
+											</div>
+										</a>
+									</div>";
+									}
+									else if($situacao == 4){
+										$tipe = "<div class='card bg-success col-sm-4 card-t1' style='max-width: 18rem;' title='Sem data de devolução - ".$emp['nm_item']."'>
+										<a href='emprestimo.php?id=".$emp['cd_emprestimo']."'>
+											<div class='card-header'>
+												<strong>Sem data de devolução</strong></div>
+											<div class='card-body'>
+												<h5 class='card-title'><strong>".$emp['nm_item']."</strong></h5>
+												<p class='card-text'><strong>".$emp['nm_amigo']."</strong> | Email: ".$emp['cd_email_amigo']." | Telefone: ".$emp['cd_telefone']."</p>
+											</div>
+										</a>
+									</div>";
+									}
+									//var_dump(defineDate($emp['dt_emprestimo'], $emp['dt_devolucao']));
+									echo $tipe;	
+								}
+								
+					 		?>
 					  </div>
 				</div>
 			</div>
@@ -102,19 +237,19 @@
 		  </button>
 		</div>
 		<div class="modal-body">
-			<form action="" method="post">
+			<form method="POST">
 				<label for="nome">Nome:</label>
 				<input type="text" name="nomeAmg" id="nomeAmg" class="form-control">
 				<label for="nome">Email:</label>
 				<input type="email" name="emailAmg" id="emailAmg" class="form-control">
 				<label for="nome">Telefone:</label>
 				<input type="text" name="telAmg" id="telAmg" class="form-control">
-			</form>
 		</div>
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-		  <button type="button" class="btn btn-primary">Adicionar</button>
+		  <button type="submit" name="addAmg" value="Adicionar" class="btn btn-primary">Adicionar</button>
 		</div>
+		</form>
 	  </div>
 	</div>
   </div>
@@ -137,18 +272,24 @@
 					<label for="nome">Amigo:</label>
 					<select name="amigo" id="amigo" class="form-control">
 						<option value="0" selected>Selecionar Amigo</option>
-						<option value="1">Mariazinha</option>
-						<option value="2">Joãozinho</option>
-						<option value="">Pedrinho</option>
+						<?php 
+							if($listaAmg){
+
+								foreach ($listaAmg as $amg) {
+									echo "<option value='".$amg['cd_amigo']."'>".$amg['nm_amigo']."</option>";
+								}
+							}
+						 ?>
 					</select>
 					<label for="dataDev">Data de devolução:</label>
 					<input type="date" name="dataDev" id="dataDev" class="form-control">
-				</form>
+				
 			</div>
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-			  <button type="button" class="btn btn-primary">Adicionar</button>
+			  <button type="submit" name="addEmp" class="btn btn-primary">Adicionar</button>
 			</div>
+			</form>
 		  </div>
 		</div>
 	  </div>

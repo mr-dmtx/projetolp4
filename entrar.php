@@ -1,26 +1,35 @@
 <?php 
-
-//    namespace Classes;
-    
     session_start();
+    include 'Classes/Usuario.php';
+
+
     if(isset($_SESSION['logged'])){
         header("location: index.php");
     }
 
-        require 'Classes/Usuario.php';
-
         $lgin = $_POST['entrar'] ?? null;
 
         $aviso = null;
+        try {
+            if(!is_null($lgin)){
+                $user = new Usuario();
+                //$user login($_POST['email'], md5($_POST['senha']));
+                if(!$user->login($_POST['email'], md5($_POST['senha']))){
+                    $aviso = "Email ou senha incorretos";
+                }
+                else{
+                    $_SESSION['logged'] = true;
+                    $_SESSION['email'] = $user->email;
+                    $_SESSION['senha'] = $user->senha;
+                    header("location: index.php");
+                }
 
-        if(!is_null($lgin)){
-            $user = new Usuario($_POST['email'], md5($_POST['senha']));
-
-            if(!$user->login()){
-                $aviso = "Email ou senha incorretos";
             }
-
+            
+        } catch (Throwable $e) {
+            $aviso = "Erro ao realizar login. Tente novamente!";
         }
+        
     
  ?>
 
@@ -32,11 +41,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#007bff">
 	<meta name="Description" content="Gerenciador de emprestimos para coisas/item aos seus amigos.">
-	<title>Meus Emprestimo</title>
+	<title>Meus Emprestimo - Entrar</title>
 	<!--importar bootstrap, js, jquery, font awesome-->
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/mainIndex.css">
-	<link rel="icon" type="type/png" href="imagens/emprestimos16.png" sizes="16x16">
+	<link rel="icon" type="type/png" href="imagens/logo.svg" sizes="16x16">
 	<link rel="icon" type="type/png" href="imagens/emprestimos32.png" sizes="32x32">
 	<link rel="icon" type="type/png" href="imagens/emprestimos96.png" sizes="96x96">
 	<link rel="apple-touch-icon" type="type/png" href="imagens/emprestimos180.png" sizes="180x180">
